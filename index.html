@@ -13,7 +13,7 @@
     </div>
 
     <div class="center">
-      <h1 class="party-title">Independents Party</h1>
+      <h1 class="party-title" id="partyTitle">Independents Party</h1>
     </div>
 
     <div class="right"></div>
@@ -27,8 +27,6 @@
           <input id="search" type="search" placeholder="Search..." />
         </div>
       </div>
-
-      <!-- ✅ one grid only -->
       <div id="membersGrid" class="members-grid"></div>
     </section>
 
@@ -42,13 +40,20 @@
         </div>
       </div>
 
+      <!-- ✅ moving thumbnail row -->
+      <div class="thumbbar" id="thumbbar">
+        <div class="thumb-track" id="thumbTrack"></div>
+      </div>
+
+      <!-- ✅ main preview -->
       <div class="gallery">
-        <div class="gallery-stage">
-          <img id="slideImg" alt="Gallery slide" />
+        <div class="gallery-stage" id="galleryStage">
+          <img id="slideImg" alt="Gallery preview" />
           <div id="slideEmpty" class="gallery-empty hidden">No photos</div>
         </div>
         <div class="gallery-meta">
           <span id="slideCounter" class="muted">0 / 0</span>
+          <span id="slideName" class="muted"></span>
         </div>
       </div>
     </section>
