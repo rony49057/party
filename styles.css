@@ -56,7 +56,7 @@ body{
   border:1px solid var(--border);
 }
 
-/* ✅ Title: hover + glow + cursor spotlight */
+/* ✅ Title: hover glow + cursor spotlight */
 .party-title{
   margin:0;
   font-size:46px;
@@ -72,14 +72,14 @@ body{
 
   --gx: 50%;
   --gy: 50%;
-  --ga: 0;      /* spotlight intensity */
-  --ha: 0;      /* hover glow intensity */
+  --ga: 0;      /* spotlight */
+  --ha: 0;      /* hover glow */
 
   transition: transform .18s ease, filter .18s ease;
   z-index: 1;
 }
 
-/* hover soft glow (full) */
+/* hover soft glow */
 .party-title::before{
   content:"";
   position:absolute;
@@ -96,7 +96,7 @@ body{
   z-index:-2;
 }
 
-/* cursor spotlight (stronger at cursor point) */
+/* cursor point glow */
 .party-title::after{
   content:"";
   position:absolute;
@@ -193,6 +193,7 @@ body{
   justify-content: start;
   justify-items: start;
 }
+
 .member-card{
   width: var(--cardMax);
   max-width: 100%;
@@ -208,6 +209,7 @@ body{
   border-color: rgba(74,163,255,.55);
   box-shadow: 0 18px 55px rgba(0,0,0,.50);
 }
+
 .member-photo{
   width:100%;
   height: var(--memberImageHeight);
@@ -241,6 +243,7 @@ body{
   transform: scale(1.08);
   filter: contrast(1.10) saturate(1.18);
 }
+
 .member-body{
   padding:14px 14px 16px;
   display:grid;
@@ -284,15 +287,11 @@ body{
   width: max-content;
   animation: marquee var(--marqueeSpeed) linear infinite;
 }
-
-/* pause on hover */
-.thumbbar:hover .thumb-track{
-  animation-play-state: paused;
-}
+.thumbbar:hover .thumb-track{ animation-play-state: paused; }
 
 @keyframes marquee{
   0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* because we duplicate list in JS */
+  100% { transform: translateX(-50%); } /* because JS duplicates */
 }
 
 .thumb{
@@ -322,54 +321,41 @@ body{
   box-shadow: 0 0 0 2px rgba(39,211,162,.20);
 }
 
-/* ✅ Main gallery preview: show FULL image (no face-only crop) */
+/* ✅ MAIN PREVIEW (smaller + full image no crop) */
 .gallery{ display:grid; gap:10px; }
+
 .gallery-stage{
+  width: min(760px, 100%);
+  margin: 0 auto;
+
+  max-height: 260px;
+  min-height: 180px;
+
   position: relative;
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
   background: rgba(255,255,255,.03);
 
-  /* ✅ auto size, not huge */
-  width: min(920px, 100%);
-  margin: 0 auto;
-
-  /* ✅ height stays reasonable on all screens */
-  max-height: 360px;
-  min-height: 240px;
-
   display:grid;
   place-items:center;
   transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
-
 .gallery-stage:hover{
   transform: translateY(-2px);
   border-color: rgba(74,163,255,.30);
   box-shadow: 0 14px 40px rgba(0,0,0,.40);
 }
-
-/* ✅ contain => no crop, auto scale */
 .gallery-stage img{
   width: 100%;
   height: 100%;
-
-  /* ✅ no face-only crop */
-  object-fit: contain;
-
-  /* ✅ make it look bigger without cropping */
-  padding: 10px;
-
+  object-fit: contain;     /* ✅ no face-only crop */
+  object-position: center;
+  padding: 10px;          /* ✅ looks bigger without cropping */
   display:block;
   background: rgba(0,0,0,.22);
   transition: transform .28s ease, filter .28s ease;
 }
-.gallery-stage:hover img{
-  transform: scale(1.02);
-  filter: saturate(1.08);
-}
-
 .gallery-stage:hover img{
   transform: scale(1.02);
   filter: saturate(1.08);
@@ -402,4 +388,51 @@ body{
   text-align:center;
   color: var(--muted);
   font-size:12px;
+}
+
+/* ✅ MOBILE: everything smaller + 1 column */
+@media (max-width: 600px){
+  :root{
+    --cardMax: 100%;
+    --memberImageHeight: 170px;
+    --thumbSize: 46px;
+    --thumbGap: 8px;
+  }
+
+  .container{ padding: 0 12px; }
+  .section-head{
+    flex-direction: column;
+    align-items: stretch;
+    gap:10px;
+  }
+  .search-wrap input{ width:100%; max-width:100%; }
+
+  .members-grid{
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+  }
+  .member-card{ width:100%; }
+
+  .gallery-stage{
+    width: 100%;
+    max-height: 200px;
+    min-height: 160px;
+  }
+
+  .thumbbar{ padding: 8px; }
+}
+
+/* ✅ TABLET: 2 columns */
+@media (min-width: 601px) and (max-width: 900px){
+  .members-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: stretch;
+  }
+  .member-card{ width:100%; }
+
+  .gallery-stage{
+    width: 100%;
+    max-height: 240px;
+    min-height: 170px;
+  }
 }

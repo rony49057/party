@@ -1,5 +1,3 @@
-/* Members ordered by role priority. Gallery has moving thumbnail row + clickable preview. */
-
 const ROLE_ORDER = [
   "leader",
   "sub_leader",
@@ -20,25 +18,21 @@ const ROLE_LABEL = {
   member: "Member",
 };
 
-/* ✅ Members (root photos: rony.jpg, sakib.jpg, nahid.jpg, meraz.jpg etc) */
+/* ✅ Member photos in root: rony.jpg sakib.jpg nahid.jpg meraz.jpg */
 const MEMBERS = [
   { role: "leader", name: "Rony", photo: "rony.jpg" },
   { role: "sub_leader", name: "Sakib", photo: "sakib.jpg" },
   { role: "up_chairman", name: "Nahid", photo: "nahid.jpg" },
-
-  // ✅ Chairman added
   { role: "chairman", name: "Meraz K", photo: "meraz.jpg" },
 
-  // add more (uncomment):
+  // add more:
   // { role: "mp", name: "MP 1", photo: "mp1.jpg" },
   // { role: "vice_chairman", name: "Vice Chairman 1", photo: "vice1.jpg" },
   // { role: "member", name: "Member 1", photo: "member1.jpg" },
 ];
 
-/* ✅ Gallery (root photos: g1.jpg ... g9.jpg) */
-const GALLERY_PHOTOS = [
-  "g1.jpg","g2.jpg","g3.jpg","g4.jpg","g5.jpg","g6.jpg","g7.jpg","g8.jpg","g9.jpg",
-];
+/* ✅ Gallery photos in root: g1.jpg ... g9.jpg */
+const GALLERY_PHOTOS = ["g1.jpg","g2.jpg","g3.jpg","g4.jpg","g5.jpg","g6.jpg","g7.jpg","g8.jpg","g9.jpg"];
 
 function $(id){ return document.getElementById(id); }
 
@@ -71,7 +65,7 @@ function matchesMember(m, q){
   return hay.includes(q.toLowerCase());
 }
 
-/* Render Members */
+/* Members */
 function renderMembers(){
   const grid = $("membersGrid");
   const q = $("search").value.trim();
@@ -103,7 +97,7 @@ function renderMembers(){
   }
 }
 
-/* ---------------- Gallery slideshow + thumbs ---------------- */
+/* Gallery */
 let slideIndex = 0;
 let autoPlay = true;
 let autoTimer = null;
@@ -111,6 +105,14 @@ let autoTimer = null;
 function normalizeSlideIndex(){
   if (GALLERY_PHOTOS.length === 0) slideIndex = 0;
   else slideIndex = ((slideIndex % GALLERY_PHOTOS.length) + GALLERY_PHOTOS.length) % GALLERY_PHOTOS.length;
+}
+
+function setActiveThumb(file){
+  const track = $("thumbTrack");
+  if (!track) return;
+  track.querySelectorAll(".thumb").forEach(el => {
+    el.classList.toggle("active", el.getAttribute("data-file") === file);
+  });
 }
 
 function renderGallery(){
@@ -138,7 +140,6 @@ function renderGallery(){
   counter.textContent = `${slideIndex + 1} / ${GALLERY_PHOTOS.length}`;
   nameEl.textContent = file;
 
-  // active thumb highlight
   setActiveThumb(file);
 }
 
@@ -165,13 +166,13 @@ function toggleAuto(){
   }
 }
 
-/* ✅ Thumbnails row: duplicate list for smooth marquee */
+/* Thumbnails row (duplicate list for marquee) */
 function buildThumbRow(){
   const track = $("thumbTrack");
   track.innerHTML = "";
 
   const files = [...GALLERY_PHOTOS];
-  const doubled = [...files, ...files]; // for marquee -50%
+  const doubled = [...files, ...files];
 
   for (const file of doubled){
     const t = document.createElement("div");
@@ -181,7 +182,6 @@ function buildThumbRow(){
     track.appendChild(t);
   }
 
-  // click: set preview to clicked file
   track.addEventListener("click", (e) => {
     const thumb = e.target.closest(".thumb");
     if (!thumb) return;
@@ -194,22 +194,14 @@ function buildThumbRow(){
   });
 }
 
-function setActiveThumb(file){
-  const track = $("thumbTrack");
-  if (!track) return;
-  track.querySelectorAll(".thumb").forEach(el => {
-    el.classList.toggle("active", el.getAttribute("data-file") === file);
-  });
-}
-
-/* ---------------- Title glow ---------------- */
+/* Title glow */
 function initTitleGlow(){
   const titleEl = document.querySelector(".party-title");
   if (!titleEl) return;
 
   titleEl.addEventListener("mouseenter", () => {
-    titleEl.style.setProperty("--ha", "1"); // hover soft glow ON
-    titleEl.style.setProperty("--ga", "1"); // spotlight ON
+    titleEl.style.setProperty("--ha", "1");
+    titleEl.style.setProperty("--ga", "1");
   });
 
   titleEl.addEventListener("mousemove", (e) => {
