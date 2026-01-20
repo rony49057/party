@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Independents Party</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="left">
+      <div class="logo">IP</div>
+    </div>
+
+    <div class="center">
+      <h1 class="party-title">Independents Party</h1>
+    </div>
+
+    <div class="right"></div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <div class="section-head">
+        <h3>Members</h3>
+        <div class="search-wrap">
+          <input id="search" type="search" placeholder="Search..." />
+        </div>
+      </div>
+
+      <!-- ✅ one grid only -->
+      <div id="membersGrid" class="members-grid"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h3>Photo Gallery</h3>
+        <div class="gallery-actions">
+          <button id="prevSlideBtn" class="btn small" type="button">Prev</button>
+          <button id="nextSlideBtn" class="btn small" type="button">Next</button>
+          <button id="togglePlayBtn" class="btn small secondary" type="button">Auto: On</button>
+        </div>
+      </div>
+
+      <div class="gallery">
+        <div class="gallery-stage">
+          <img id="slideImg" alt="Gallery slide" />
+          <div id="slideEmpty" class="gallery-empty hidden">No photos</div>
+        </div>
+        <div class="gallery-meta">
+          <span id="slideCounter" class="muted">0 / 0</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Independents Party</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
